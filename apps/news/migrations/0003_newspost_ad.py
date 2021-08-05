@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='newspost',
             name='ad',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to='advertising.Advertisement'),
+            field=models.ForeignKey(null=True, blank=True, default=None, on_delete=django.db.models.deletion.PROTECT, to='advertising.Advertisement'),
         ),
     ]
