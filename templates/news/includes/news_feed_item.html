@@ -11,6 +11,7 @@
 		<a href="{{ feed_item.url }}">{{ feed_item.title }}</a>
 	</div>
 	<div class="feed-teaser" data-story_id="{{feed_item.pk}}">
-		{{ feed_item.teaser|safe  }} ...
+		{{ feed_item.body|safe|truncatechars_html:150}} ...
+		<!-- remove use of teaser method (for now!) and use truncatechars_html to ensure tag closures -->
 	</div>
 </li>
