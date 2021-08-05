@@ -28,6 +28,8 @@ class NewsPost(models.Model):
     divesite = models.ForeignKey(DiveSite, null=True, on_delete=models.SET_NULL)
     topics = models.ManyToManyField(Topic)
     active = models.BooleanField(default=True)
+
+    ad = models.ForeignKey(Advertisement, on_delete=models.PROTECT, default=1)
     
 
     def __str__(self):

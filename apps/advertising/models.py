@@ -8,3 +8,7 @@ class Advertisement(models.Model):
   logo = models.CharField(max_length=150, default="industry-dive.png") # can set up folder to upload files and use FileField?
   url = models.CharField(max_length=150, default="https://industrydive.com")
 
+
+  def __str__(self):
+    return self.company_name + " - " + self.copy[:100]
+
