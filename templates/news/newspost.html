@@ -10,13 +10,13 @@
 		<div class="spoonser">
 			<div class="col-2"></div>
 			<div class="col">
-				<a target="_blank" href="{{newspost.ad.url}}"> <!-- changed ref to random ad to newspost ad -->
+				<a target="_blank" href="{{ad.url}}">
 					<div class="row">
 						<div class="col-4 spoonsor-image">
-							<img src="{% static 'spoonsers/' %}{{newspost.ad.logo}}" width="200px" />
+							<img src="{% static 'spoonsers/' %}{{ad.logo}}" width="200px" />
 						</div>
 						<div class="col spoonsor-content">
-							<span class="spoonsor-text">This news post is brought to you by {{newspost.ad.company_name}} - {{newspost.ad.copy}}</span>
+							<span class="spoonsor-text">This news post is brought to you by {{ad.company_name}} - {{ad.copy}}</span>
 						</div>
 					</div>
 				</a>

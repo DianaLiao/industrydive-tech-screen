@@ -29,7 +29,7 @@ class NewsPost(models.Model):
     topics = models.ManyToManyField(Topic)
     active = models.BooleanField(default=True)
 
-    ad = models.ForeignKey(Advertisement, on_delete=models.PROTECT, default=1)
+    ad = models.ForeignKey(Advertisement, on_delete=models.PROTECT, default=None, null=True, blank=True)
     
 
     def __str__(self):

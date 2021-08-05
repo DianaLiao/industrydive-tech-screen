@@ -36,7 +36,8 @@ def newspost_detail(request, newspost_id):
     newspost = NewsPost.objects.get(pk=newspost_id)
     context = {
         'newspost': newspost,
-        'ad': get_ad()
+        #'ad': get_ad()
+        'ad': newspost.ad or get_ad() 
     }
     return HttpResponse(template.render(context, request))
 
