@@ -4,13 +4,13 @@
 const searchTextBox = document.querySelector("#id_text_search")
 const selectForm = document.querySelector("ul.form-multiselect")
 const allPosts = document.querySelectorAll("#archive > li")
+const selectedTopics = []
 
 /* event listeners */
 searchTextBox.addEventListener("input", filterByText)
 selectForm.addEventListener("change", filterByTopic)
 
 /* filtering functions */
-
 function filterByText(event){
   const searchText = event.target.value.toLowerCase()
 
@@ -30,6 +30,36 @@ function filterByText(event){
 }
 
 function filterByTopic({target}){
-  console.log(target.value)
+  const clickedTopic = target.value
+  console.log(target)
+  const index = selectedTopics.indexOf(clickedTopic)
+
+  if (index === -1){
+    selectedTopics.push(clickedTopic)
+  }
+  else {
+    selectedTopics.splice(index, 1)
+  }
+  
+  const topicLis = selectForm.querySelectorAll("li")
+  const topicChoices = Array.from(topicLis, topicLi => {
+    const input = topicLi.querySelector("input")
+    return {topicId: input.value, topicName: topicLi.innerText.trim()}
+  })
+  const selectedChoices = topicChoices.filter(choice => selectedTopics.includes(choice.topicId))
+  const selectedTopicNames = selectedChoices.map(topic => topic.topicName)
+
+  allPosts.forEach(postLi => {
+    const postTopicTags = postLi.querySelectorAll(".label--tag")
+    const postTopics = Array.from(postTopicTags, tag => tag.innerHTML)
+    
+    // if (articleText.includes(searchText)){
+    //   postLi.style.display = "block"
+    // }
+    // else {
+    //   postLi.style.display = "none"
+    // }
+  })
+
 }
 
