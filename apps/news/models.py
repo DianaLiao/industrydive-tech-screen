@@ -42,6 +42,7 @@ class NewsPost(models.Model):
     @property
     def teaser(self):
         return self.body[:150]
+    # currently removed from template
 
     @property
     def source_divesite(self):
