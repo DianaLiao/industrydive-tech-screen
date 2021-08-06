@@ -31,7 +31,6 @@ function filterByText(event){
 
 function filterByTopic({target}){
   const clickedTopic = target.value
-  console.log(target)
   const index = selectedTopics.indexOf(clickedTopic)
 
   if (index === -1){
@@ -52,13 +51,20 @@ function filterByTopic({target}){
   allPosts.forEach(postLi => {
     const postTopicTags = postLi.querySelectorAll(".label--tag")
     const postTopics = Array.from(postTopicTags, tag => tag.innerHTML)
-    
-    // if (articleText.includes(searchText)){
-    //   postLi.style.display = "block"
-    // }
-    // else {
-    //   postLi.style.display = "none"
-    // }
+ 
+    const isIncludedTopic = selectedTopicNames.some(e => postTopics.includes(e))
+
+    console.log(selectedTopics)
+
+    if (selectedTopics !== [] && isIncludedTopic){
+      postLi.style.display = "block"
+    }
+    else if (selectedTopics.length == 0) {
+      postLi.style.display = "block"
+    }
+    else {
+      postLi.style.display = "none"
+    }
   })
 
 }
