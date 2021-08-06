@@ -5,14 +5,40 @@ const searchTextBox = document.querySelector("#id_text_search")
 const selectForm = document.querySelector("ul.form-multiselect")
 const allPosts = document.querySelectorAll("#archive > li")
 const selectedTopics = []
+let searchText = ""
+
 
 /* event listeners */
-searchTextBox.addEventListener("input", filterByText)
-selectForm.addEventListener("change", filterByTopic)
+searchTextBox.addEventListener("input", e => {
+  setSearchText(e)
+  filterByTopic()
+  filterByText()
+} )
+selectForm.addEventListener("change", e => {
+  setTopics(e)
+  filterByText()
+  filterByTopic()
+})
+
+/* setter functions */
+function setSearchText(event){
+  searchText = event.target.value.toLowerCase()
+}
+
+function setTopics(event){
+  const clickedTopic = event.target.value
+  const index = selectedTopics.indexOf(clickedTopic)
+
+  if (index === -1){
+    selectedTopics.push(clickedTopic)
+  }
+  else {
+    selectedTopics.splice(index, 1)
+  }
+}
 
 /* filtering functions */
-function filterByText(event){
-  const searchText = event.target.value.toLowerCase()
+function filterByText(){
 
   allPosts.forEach(postLi => {
     const title = postLi.querySelector(".feed-link")
@@ -29,17 +55,8 @@ function filterByText(event){
   })
 }
 
-function filterByTopic({target}){
-  const clickedTopic = target.value
-  const index = selectedTopics.indexOf(clickedTopic)
+function filterByTopic(){
 
-  if (index === -1){
-    selectedTopics.push(clickedTopic)
-  }
-  else {
-    selectedTopics.splice(index, 1)
-  }
-  
   const topicLis = selectForm.querySelectorAll("li")
   const topicChoices = Array.from(topicLis, topicLi => {
     const input = topicLi.querySelector("input")
