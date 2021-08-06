@@ -11,13 +11,15 @@ let searchText = ""
 /* event listeners */
 searchTextBox.addEventListener("input", e => {
   setSearchText(e)
-  filterByTopic()
-  filterByText()
+  filterByText(allPosts)
+  // const filteredPosts = filterByTopic(allPosts)
+  // filterByText(filteredPosts)
 } )
 selectForm.addEventListener("change", e => {
   setTopics(e)
-  filterByText()
-  filterByTopic()
+  filterByTopic(allPosts)
+  // const filteredPosts = filterByText(allPosts)
+  // filterByTopic(filteredPosts)
 })
 
 /* setter functions */
@@ -38,25 +40,33 @@ function setTopics(event){
 }
 
 /* filtering functions */
-function filterByText(){
+function filterByText(posts){
+  let filteredPosts = []
 
-  allPosts.forEach(postLi => {
+  posts.forEach(postLi => {
     const title = postLi.querySelector(".feed-link")
     const teaser = postLi.querySelector(".feed-teaser")
+  
 
     const articleText = title.innerText.toLowerCase() + " " + teaser.innerText.toLowerCase()
 
     if (articleText.includes(searchText)){
       postLi.style.display = "block"
+      filteredPosts.push(postLi)
     }
     else {
       postLi.style.display = "none"
+      const index = filteredPosts.indexOf(postLi)
+      filteredPosts.splice(index, 1)
     }
   })
+  console.log(filteredPosts)
+  return filteredPosts
 }
 
-function filterByTopic(){
+function filterByTopic(posts){
 
+  let filteredPosts = []
   const topicLis = selectForm.querySelectorAll("li")
   const topicChoices = Array.from(topicLis, topicLi => {
     const input = topicLi.querySelector("input")
@@ -65,24 +75,26 @@ function filterByTopic(){
   const selectedChoices = topicChoices.filter(choice => selectedTopics.includes(choice.topicId))
   const selectedTopicNames = selectedChoices.map(topic => topic.topicName)
 
-  allPosts.forEach(postLi => {
+  posts.forEach(postLi => {
     const postTopicTags = postLi.querySelectorAll(".label--tag")
     const postTopics = Array.from(postTopicTags, tag => tag.innerHTML)
  
     const isIncludedTopic = selectedTopicNames.some(e => postTopics.includes(e))
 
-    console.log(selectedTopics)
-
     if (selectedTopics !== [] && isIncludedTopic){
       postLi.style.display = "block"
+      filteredPosts.push(postLi)
     }
     else if (selectedTopics.length == 0) {
       postLi.style.display = "block"
+      filteredPosts = [...posts]
     }
     else {
       postLi.style.display = "none"
+      const index = filteredPosts.indexOf(postLi)
+      filteredPosts.splice(index, 1)
     }
   })
-
+  return filteredPosts
 }
 
